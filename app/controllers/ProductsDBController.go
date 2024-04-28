@@ -10,6 +10,7 @@ import (
 )
 
 const invalidProductID = "nieprawidłowe ID produktu";
+const serverError = "Błąd serwera";
 
 
 type ProductController struct {
@@ -47,7 +48,7 @@ func (controller *ProductController) GetOneDB(c echo.Context) error {
         if result.Error == gorm.ErrRecordNotFound {
             return c.JSON(http.StatusNotFound, "Nie znaleziono produktu")
         }
-        return c.JSON(http.StatusInternalServerError, "Błąd serwera")
+        return c.JSON(http.StatusInternalServerError, serverError)
     }
 
     return c.JSON(http.StatusOK, product)
@@ -65,7 +66,7 @@ func (controller *ProductController) AddOneDB(c echo.Context) error {
 
     result := controller.DB.Create(&newItem)
     if result.Error != nil {
-        return c.JSON(http.StatusInternalServerError, "Błąd serwera")
+        return c.JSON(http.StatusInternalServerError, serverError)
     }
 
     return c.JSON(http.StatusOK, "przedmiot dodany pomyślnie")
@@ -81,7 +82,7 @@ func (controller *ProductController) DeleteOneDB(c echo.Context) error {
     result := controller.DB.Delete(&models.Product{}, idNum)
 
     if result.Error != nil {
-        return c.JSON(http.StatusInternalServerError, "Błąd serwera")
+        return c.JSON(http.StatusInternalServerError, serverError)
     }
 
     if result.RowsAffected == 0 {
