@@ -1,0 +1,8 @@
+*.o
+*.a
+
+.env
+.env.*
+
+/go.mod
+/go.sum
