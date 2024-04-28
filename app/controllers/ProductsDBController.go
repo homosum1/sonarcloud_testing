@@ -9,6 +9,7 @@ import (
 	"zadanie_4_ebiz.com/app/models"
 )
 
+const invalidProductID = "nieprawidłowe ID produktu";
 
 
 // todo: for dependency injecting
@@ -36,7 +37,7 @@ func (controller *ProductController) GetOneDB(c echo.Context) error {
     idStr := c.Param("id")
     idNum, err := strconv.Atoi(idStr)
 
-    if err != nil { return c.JSON(http.StatusBadRequest, "nieprawidłowe ID produktu") }
+    if err != nil { return c.JSON(http.StatusBadRequest, invalidProductID) }
 
 
     var product models.Product
@@ -75,7 +76,7 @@ func (controller *ProductController) DeleteOneDB(c echo.Context) error {
     idStr := c.Param("id")
     idNum, err := strconv.Atoi(idStr)
 
-    if err != nil { return c.JSON(http.StatusBadRequest, "nieprawidłowe ID produktu") }
+    if err != nil { return c.JSON(http.StatusBadRequest, invalidProductID) }
 
 
     result := controller.DB.Delete(&models.Product{}, idNum)
@@ -95,7 +96,7 @@ func (controller *ProductController) PatchOneDB(c echo.Context) error {
     idStr := c.Param("id")
     idNum, err := strconv.Atoi(idStr)
 
-    if err != nil { return c.JSON(http.StatusBadRequest, "nieprawidłowe ID produktu") }
+    if err != nil { return c.JSON(http.StatusBadRequest, invalidProductID) }
 
 
     var updateProduct models.Product
@@ -107,7 +108,7 @@ func (controller *ProductController) PatchOneDB(c echo.Context) error {
     result := controller.DB.Model(&models.Product{}).Where("id = ?", idNum).Updates(updateProduct)
 
     if result.Error != nil {
-        return c.JSON(http.StatusInternalServerError, "nieprawidłowe ID produktu")
+        return c.JSON(http.StatusInternalServerError, invalidProductID)
     }
     
     if result.RowsAffected == 0 {
