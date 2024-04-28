@@ -12,7 +12,6 @@ import (
 const invalidProductID = "nieprawidłowe ID produktu";
 
 
-// todo: for dependency injecting
 type ProductController struct {
     DB *gorm.DB
 }

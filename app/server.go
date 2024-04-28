@@ -36,7 +36,6 @@ func main() {
 	productsFromList.PATCH("/patchOne/:id", controllers.PatchOne)
 
 
-	// todo: dependency injecting?
 	productController := controllers.NewProductController(db)
 
 	productsFromDB := e.Group("/productsDB")
