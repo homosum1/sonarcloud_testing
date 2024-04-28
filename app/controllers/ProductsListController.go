@@ -7,6 +7,8 @@ import (
     "zadanie_4_ebiz.com/app/models"
 )
 
+const invalidProductID = "nieprawidłowe ID produktu"
+
 func GetAll(c echo.Context) error {
     return c.JSON(http.StatusOK, models.ItemList)
 
@@ -17,7 +19,7 @@ func GetOne(c echo.Context) error {
     idStr := c.Param("id")
     idNum, err := strconv.Atoi(idStr)
 
-    if err != nil { return c.JSON(http.StatusBadRequest, "nieprawidłowe ID produktu") }
+    if err != nil { return c.JSON(http.StatusBadRequest, invalidProductID) }
 
     for _, item := range models.ItemList {
         if item.ID == idNum { return c.JSON(http.StatusOK, item) }
@@ -50,7 +52,7 @@ func DeleteOne(c echo.Context) error {
     idStr := c.Param("id")
     idNum, err := strconv.Atoi(idStr)
 
-    if err != nil { return c.JSON(http.StatusBadRequest, "nieprawidłowe ID produktu") }
+    if err != nil { return c.JSON(http.StatusBadRequest, invalidProductID) }
 
 
     for i, item := range models.ItemList {
@@ -68,7 +70,7 @@ func PatchOne(c echo.Context) error {
     idStr := c.Param("id")
     idNum, err := strconv.Atoi(idStr)
 
-    if err != nil { return c.JSON(http.StatusBadRequest, "nieprawidłowe ID produktu") }
+    if err != nil { return c.JSON(http.StatusBadRequest, invalidProductID) }
 
     var updatedItem models.Item
 
